@@ -46,6 +46,22 @@ def delete_task():
     except ValueError:
         print("Please enter a valid number")
 
+def edit_task():
+    view_tasks()
+    if not tasks:
+        return
+    
+    try:
+        task_number = int(input("Enter the number of task to edit: "))
+        if 1 <=task_number <= len(tasks):
+            new_text = input("Enter the new task: ")
+            tasks[task_number - 1]["tasks"] = new_text
+            print("Task updated")
+        else:
+            print("Invalid task number")
+    except ValueError:
+        print("Please enter a valid number")
+
 
 def menu():
     while True:
@@ -54,7 +70,8 @@ def menu():
         print("2. View Tasks")
         print("3. Mark Task as Complete")
         print("4. Delete Task")
-        print("5. Exit")
+        print("5. Edit Task")
+        print("6. Exit")
 
         choice = input("Choose an option (1-5): ")
         if choice == "1":
@@ -66,6 +83,8 @@ def menu():
         elif choice == "4":
             delete_task()
         elif choice == "5":
+            edit_task()
+        elif choice == "6":
             print("GoodBye")
             break
         else:
