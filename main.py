@@ -32,6 +32,19 @@ def mark_task_complete():
     except ValueError:
         print("Please enter a valid number.")
 
+def delete_task():
+    view_tasks()
+    if not tasks:
+        return
+    try: 
+        task_number = int(input("Enter the number of the task to delete: "))
+        if 1<= task_number <= len(tasks):
+            deleted = tasks.pop(task_number-1)
+            print(f"\U0001F5D1 Task '{deleted['task']}' deleted")
+        else:
+            print("Invalid task number")
+    except ValueError:
+        print("Please enter a valid number")
 
 
 def menu():
@@ -40,9 +53,10 @@ def menu():
         print("1. Add Task")
         print("2. View Tasks")
         print("3. Mark Task as Complete")
-        print("4. Exit")
+        print("4. Delete Task")
+        print("5. Exit")
 
-        choice = input("Choose an option (1-4): ")
+        choice = input("Choose an option (1-5): ")
         if choice == "1":
             add_task()
         elif choice == "2":
@@ -50,6 +64,8 @@ def menu():
         elif choice == "3":
             mark_task_complete()
         elif choice == "4":
+            delete_task()
+        elif choice == "5":
             print("GoodBye")
             break
         else:
