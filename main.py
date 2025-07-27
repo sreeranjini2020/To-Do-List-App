@@ -1,12 +1,13 @@
 tasks = []
 
+# 1. Add Task
 def add_task():
     task_name = input("Enter a new task: ")
     task = {"task": task_name, "done":False}
     tasks.append(task)
     print("Task added!")
 
-
+# 2. View Tasks
 def view_tasks():
     if not tasks:
         print("No tasks yet")
@@ -17,6 +18,7 @@ def view_tasks():
             status = "\u2705" if t["done"] else "\u274C"
             print(f"{i}.{t['task']}[{status}]")
 
+# 3. Mark Task as Complete
 def mark_task_complete():
     view_tasks()
     if not tasks:
@@ -32,6 +34,7 @@ def mark_task_complete():
     except ValueError:
         print("Please enter a valid number.")
 
+# 4. Delete Task
 def delete_task():
     view_tasks()
     if not tasks:
@@ -46,6 +49,7 @@ def delete_task():
     except ValueError:
         print("Please enter a valid number")
 
+# 5. Edit Task
 def edit_task():
     view_tasks()
     if not tasks:
@@ -61,6 +65,26 @@ def edit_task():
             print("Invalid task number")
     except ValueError:
         print("Please enter a valid number")
+
+
+# 6. Save tasks to file
+def save_tasks_to_file():
+    with open("task.txt", "w") as file:
+        for task in tasks:
+            status = "1" if task["done"] else "0"
+            file.write(f"{status}|{task['task']}\n")
+
+
+# 7. Load tasks from file
+def load_task_from_file():
+    try:
+        with open("task.txt", "r") as file:
+            for line in file:
+                status, task_text = line.strip().split("|", 1)
+                completed = True if status == "1" else False
+                tasks.append({"task": task_text, "completed": completed})
+    except FileExistsError:
+        pass
 
 
 def menu():
@@ -85,9 +109,12 @@ def menu():
         elif choice == "5":
             edit_task()
         elif choice == "6":
+            save_tasks_to_file()
             print("GoodBye")
             break
         else:
             print("Invalid option. Try again")
 
-menu()
+# 9. Entry Point
+if __name__ == "__main__":
+    menu()
